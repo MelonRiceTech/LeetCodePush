@@ -1,0 +1,38 @@
+29. Divide Two Integers
+
+Difficulty: Medium
+
+class Solution {
+    public int divide(int dividend, int divisor) {
+        long res = 0;
+        long temp = 1;
+        boolean flag = true;
+        long check = (long)dividend;
+        if ((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)){
+            flag = false;
+        }
+        if (check > Integer.MAX_VALUE || check < Integer.MIN_VALUE){
+            return 2147483647; 
+        }
+        if (dividend == Integer.MIN_VALUE && divisor == -1){
+            return Integer.MAX_VALUE;
+        }
+        if (check == 0){
+            return 0;
+        }
+        long ldiv = Math.abs((long)dividend);
+        long rdiv = Math.abs((long)divisor);
+        while (ldiv >= rdiv){
+            if ((rdiv << 1) <= ldiv){
+                rdiv = rdiv << 1;
+                temp = temp << 1;
+            }else{
+                ldiv = ldiv - rdiv;
+                rdiv = Math.abs((long)divisor);
+                res += temp;
+                temp = 1;
+            }
+        }
+        return flag? (int)res: -(int)res;
+    }
+}
