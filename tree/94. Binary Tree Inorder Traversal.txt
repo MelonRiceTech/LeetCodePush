@@ -1,0 +1,24 @@
+
+Difficult: Medium
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        //<TreeNode> stack = new Stack<TreeNode>();
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        if (root == null){
+            return res;
+        }
+        TreeNode cur = root;
+        Traversal(cur, res);
+        return res;
+    }
+    public void Traversal(TreeNode node, ArrayList res){
+        if (node.left != null){
+            Traversal(node.left, res);
+        }
+        res.add(node.val);
+        if (node.right != null){
+            Traversal(node.right, res);
+        }
+    }
+}
