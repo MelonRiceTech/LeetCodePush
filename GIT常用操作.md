@@ -195,5 +195,33 @@ origin  git@github.com:MelonRiceTech/LeetCodePush.git (push)
 
 `git config --global user.name "yourname"`和`git config --global user.email "youremail"`修改姓名和邮箱，去掉--global可针对每个repo单独设定。
 
+### 10. git rebase
+`git rebase`和`git merge`都被设计来将一个分支的更改并入另一个分支，只不过方式有些不同。
 
+####Merge
+
+将 master 分支合并到 feature 分支最简单的办法就是用下面的命令
+
+`git checkout feature`
+`git merge master`
+
+或者，你也可以把它们压缩在一行里。
+
+`git merge master feature`
+feature 分支中新的合并提交（merge commit）将两个分支的历史连在了一起。
+
+Merge 好在它是一个安全的操作。现有的分支不会被更改，避免了 rebase 潜在的缺点。
+
+####rebase
+作为 merge 的替代选择，你可以像下面这样将 feature 分支并入 master 分支：
+
+`git checkout feature`
+
+`git rebase master`
+
+它会把整个 feature 分支移动到 master 分支的后面，有效地把所有 master 分支上新的提交并入过来。但是，rebase 为原分支上每一个提交创建一个新的提交，重写了项目历史，并且不会带来合并提交。
+
+rebase最大的好处是你的项目历史会非常整洁。首先，它不像`git merge`那样引入不必要的合并提交。其次，rebase 导致最后的项目历史呈现出完美的线性——你可以从项目终点到起点浏览而不需要任何的 fork。这让你更容易使用`git log`、`git bisect`和`gitk`来查看项目历史。
+
+不过，这种简单的提交历史会带来两个后果：安全性和可跟踪性。如果你违反了 rebase 黄金法则，重写项目历史可能会给你的协作工作流带来灾难性的影响。此外，rebase 不会有合并提交中附带的信息——你看不到 feature 分支中并入了上游的哪些更改。
 
